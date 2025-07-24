@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packery Gallery</title>
+
+  <!-- Packery + imagesLoaded -->
+  <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #fafafa;
+    }
+
+    .grid {
+      max-width: 96vw;
+      margin: 0 auto;
+    }
+
+    .grid-item {
+      width: calc(96vw / 4 - 10px);
+      /* margin-bottom: 10px; */
+      border-radius: 6px;
+      overflow: hidden;
+      background: #eee;
+    }
+
+    @media(max-width: 768px) {
+      .grid-item {
+        width: calc(90vw / 2);
+      }
+    }
+
+    .grid-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid" id="photoGrid"></div>
+
+  <script>
+    const photosCount = 230;
+    const basePath = './img'; // ваш шлях до зображень
+    const grid = document.getElementById('photoGrid');
+
+    for (let i = 1; i <= photosCount; i++) {
+      const item = document.createElement('div');
+      item.className = 'grid-item';
+
+      const img = document.createElement('img');
+      img.src = `${basePath}/card_${i}.webp`;
+      img.alt = `Card image ${i}`;
+      img.loading = 'lazy';
+
+      item.appendChild(img);
+      grid.appendChild(item);
+    }
+
+    // Ініціалізуємо тільки після повного завантаження зображень
+    imagesLoaded(grid, function () {
+      new Packery(grid, {
+        itemSelector: '.grid-item',
+        gutter: 10
+      });
+    });
+  </script>
+
+</body>
+</html>
